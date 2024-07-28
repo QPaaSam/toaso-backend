@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Recommendations</title>
+</head>
+<body>
+    <h1> Program Recommendations for {{ user.name }} </h1>
+
+    <h2>All Programs </h2>
+    <ul>
+        {% for program in all_programs %}
+            <li>{{ program.name }}: {{program.description}}</li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for program in recommended_programs %}
+        
+            <li>{{ program.name }}: {{program.description}} </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
