@@ -1,10 +1,9 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse, redirect
 from .models import UserProfile, Program, ElectiveSubject
-
 
 # Create your views here.
 def index(request):
-    return HttpResponse('hello world')
+    return render(request, 'toaso/home.html')
 
 def recommend_programs(user_profile):
     recommendations = []

@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
-<body>
+<body>   
     <h1>Login Page</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="button" type="submit" value="Login">
+    </form>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
 </body>
 </html>
