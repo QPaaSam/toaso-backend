@@ -1,5 +1,7 @@
 from django.shortcuts import render,HttpResponse, redirect
 from .models import UserProfile, Program, ElectiveSubject
+from .forms import UserProfileForm
+
 
 # Create your views here.
 def index(request):
@@ -13,9 +15,14 @@ def recommend_programs(user_profile):
                 recommendations.append(program)
     return recommendations
 
-def user_recommendations(request, user_id):
-    user_profile = UserProfile.objects.get(id=user_id)
-    recommended_programs = recommend_programs(user_profile)
-    all_programs = Program.objects.all()
-    return render(request, 'toaso/user_recommendations.html', {'user':user_profile, 'recommended_programs':recommended_programs, 'all_programs': all_programs})
-
+def user_recommendations(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            user_profile = form.save()
+            recommended_programs = recommend_programs(user_profile)
+            all_programs = Program.objects.all()
+            return render(request, 'toaso/user_recommendations.html', {'user':user_profile, 'recommended_programs':recommended_programs, 'all_programs': all_programs})
+    else:
+        form = UserProfileForm()
+    return render(request, 'toaso/user_form.html', {'form':form})
