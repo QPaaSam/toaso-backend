@@ -1,5 +1,5 @@
-from django.shortcuts import render,HttpResponse, redirect
-from .models import UserProfile, Program, ElectiveSubject
+from django.shortcuts import render
+from .models import UserProfile, Program
 from .forms import UserProfileForm
 
 
@@ -9,10 +9,24 @@ def index(request):
 
 def recommend_programs(user_profile):
     recommendations = []
+    user_elective_subjects = set(user_profile.elective_subjects.all())
+
     for program in Program.objects.all():
+        program_electives = set(program.elective_requirements.all())
+        constant_course = program.constant_course
+
         if user_profile.aggregate <= program.cutt_off_point:
-            if any(subject in user_profile.elective_subjects.all() for subject in program.elective_subject.all()):
-                recommendations.append(program)
+            if program.elective_requirement_logic == 'ANY':
+                if user_elective_subjects & program_electives:
+                    recommendations.append(program)
+            elif program.elective_requirement_logic == 'ALL':
+                if program_electives.issubset(user_elective_subjects):
+                    recommendations.append(program)
+            elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
+                if constant_course in user_elective_subjects:
+                    remaining_subjects = user_elective_subjects - {constant_course}
+                    if len(remaining_subjects & program_electives) >= 2:
+                        recommendations.append(program)
     return recommendations
 
 def user_recommendations(request):
