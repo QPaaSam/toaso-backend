@@ -43,7 +43,11 @@ def user_recommendations(request):
     return render(request, 'toaso/user_form.html', {'form':form})
 
 def all_programs(request):
-    programs = Program.objects.all()
+    query = request.GET.get('q')
+    if query:
+        programs = Program.objects.filter(name__icontains=query)
+    else:
+        programs = Program.objects.all()
     return render(request, 'toaso/all_programs.html', {'programs':programs})
 
 def program_detail(request, pk):

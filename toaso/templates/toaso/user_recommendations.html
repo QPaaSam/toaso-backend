@@ -8,12 +8,10 @@
 <body>
     <h1> Program Recommendations for {{ user.name }} </h1>
 
-    <h2>All Programs </h2>
-    <ul>
-        {% for program in all_programs %}
-            <li>{{ program.name }}: {{program.description}}</li>
-        {% endfor %}
-    </ul>
+    <form method="GET" style="margin-top: 20px; display: flex">
+        <input type="text" name="q" placeholder="Search programs" value="{{request.GET.q}}"> 
+        <input class="button" type="submit", value="search">
+    </form> 
 
     <h2>Recommended Courses</h2>
     <ul>

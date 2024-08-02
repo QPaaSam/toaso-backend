@@ -7,6 +7,12 @@
 </head>
 <body>
     <h1>University Programs</h1>
+
+    <form method="GET" style="margin-top: 20px; display: flex">
+        <input type="text" name="q" placeholder="Search programs" value="{{request.GET.q}}"> 
+        <input class="button" type="submit", value="search">
+    </form>    
+
     <ul>
         {% for program in programs %}
             <li>
