@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import UserProfile, Program
 from .forms import UserProfileForm
+
 
 
 # Create your views here.
@@ -40,3 +41,11 @@ def user_recommendations(request):
     else:
         form = UserProfileForm()
     return render(request, 'toaso/user_form.html', {'form':form})
+
+def all_programs(request):
+    programs = Program.objects.all()
+    return render(request, 'toaso/all_programs.html', {'programs':programs})
+
+def program_detail(request, pk):
+    program = get_object_or_404(Program, pk=pk)
+    return render(request, 'toaso/program_detail.html', {'program':program})

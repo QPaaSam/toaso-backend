@@ -12,5 +12,7 @@
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form> 
+    <p><a href="{% url 'user_recommendations' %}">Recommendations</a></p>
+    <p><a href="{% url 'programs' %}">All Programs</a></p>
 </body>
 </html>

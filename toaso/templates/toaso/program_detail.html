@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ program.name }}</title>
+</head>
+<body>
+
+    <div >
+        <p></p>
+        <form method="GET" style="margin-top: 20px; display: flex">
+            <input type="text" name="search-area" value="{{search_input}}"> 
+            <input class="button" type="submit", value="search">
+        </form>    
+    </div>  
+
+    <h1> {{program.name}} </h1>
+    <p>{{ program.description }}</p>
+    <p><strong>Core Requirements: </strong>
+        Credit passes in English, Core Mathematics, Integrated Science & Social Studies
+    <p><strong>Elective Requirements: </strong> 
+        {% if program.elective_reqirement_logic == 'ANY' %}
+            Credit passes in any three electives
+        {% elif program.elective_requirement_logic == 'ALL' %}
+            {% for elective in program.elective_requirements.all %}
+                {{ elective.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO' %}
+            {{ program.constant_elective }} and any two elective subjects
+        {% endif %}
+    <p><strong>NOTE: </strong> {{program.note}} </p>    
+    <p><strong> Cut-off Point: </strong> {{program.cut_off_point}}</p>
+    <p><strong> Career Pathways: </strong> {{program.career}}</p>
+    <p><a href="{% url 'programs' %}">Back to all programs</a></p>
+</body>
+</html>

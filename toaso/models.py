@@ -22,9 +22,9 @@ class UserProfile(models.Model):
 class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    cutt_off_point = models.IntegerField()
+    cut_off_point = models.IntegerField()
     elective_requirements = models.ManyToManyField(ElectiveSubject, related_name='required_for_programs', blank=True)
-    constant_course = models.ForeignKey(ElectiveSubject, related_name='constant_for_programs', null=True, blank=True, on_delete=models.SET_NULL)
+    constant_elective = models.ForeignKey(ElectiveSubject, related_name='constant_for_programs', null=True, blank=True, on_delete=models.SET_NULL)
     elective_requirement_logic = models.CharField(
         max_length=50,
         choices=[('ANY', 'Any'), ('ALL', 'All'), ('CONSTANT_PLUS_TWO', 'Constat plus Two')],
