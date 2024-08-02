@@ -9,7 +9,7 @@
     <h1> Program Recommendations for {{ user.name }} </h1>
 
     <form method="GET" style="margin-top: 20px; display: flex">
-        <input type="text" name="q" placeholder="Search programs" value="{{request.GET.q}}"> 
+        <input type="text" name="q" placeholder="Search programs" value="{{ query }}"> 
         <input class="button" type="submit", value="search">
     </form> 
 
@@ -17,8 +17,10 @@
     <ul>
         {% for program in recommended_programs %}
         
-            <li>{{ program.name }}: {{program.description}} </li>
+            <li><a href="{% url 'program_detail' program.pk %}">{{ program.name }}</a></li>
         {% endfor %}
+
+        <a href="{% url 'user_recommendations' %}">Go Back</a>
     </ul>
 </body>
 </html>

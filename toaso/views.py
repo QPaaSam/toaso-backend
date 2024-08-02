@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserProfile, Program
 from .forms import UserProfileForm
 
@@ -14,9 +14,9 @@ def recommend_programs(user_profile):
 
     for program in Program.objects.all():
         program_electives = set(program.elective_requirements.all())
-        constant_course = program.constant_course
+        constant_course = program.constant_elective
 
-        if user_profile.aggregate <= program.cutt_off_point:
+        if user_profile.aggregate <= program.cut_off_point:
             if program.elective_requirement_logic == 'ANY':
                 if user_elective_subjects & program_electives:
                     recommendations.append(program)
@@ -35,13 +35,24 @@ def user_recommendations(request):
         form = UserProfileForm(request.POST)
         if form.is_valid():
             user_profile = form.save()
-            recommended_programs = recommend_programs(user_profile)
-            all_programs = Program.objects.all()
-            return render(request, 'toaso/user_recommendations.html', {'user':user_profile, 'recommended_programs':recommended_programs, 'all_programs': all_programs})
+            request.session['user_profile_id'] = user_profile.id
+            return redirect('view_recommendations')
     else:
         form = UserProfileForm()
     return render(request, 'toaso/user_form.html', {'form':form})
 
+def view_recommendations(request):
+    user_profile_id = request.session.get('user_profile_id')
+    if user_profile_id:
+        user_profile = UserProfile.objects.get(id = user_profile_id)
+        recommended_programs = recommend_programs(user_profile)
+        query = request.GET.get('q') #search fuction
+        if query:
+            recommended_programs = [program for program in recommend_programs if query.lower() in program.name.lower()]
+        return render(request, 'toaso/user_recommendations.html', {'user':user_profile, 'recommended_programs':recommended_programs, 'all_programs': all_programs, 'query': query})
+    else:
+        return redirect('user_recommendations')
+    
 def all_programs(request):
     query = request.GET.get('q')
     if query:
