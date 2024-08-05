@@ -9,6 +9,7 @@
 </head>
 <body>
     {% block content %}
+
     <h1> Program Recommendations for {{ user.name }} </h1>
 
     <form method="GET" style="margin-top: 20px; display: flex">
@@ -19,12 +20,11 @@
     <h2>Recommended Courses</h2>
     <ul>
         {% for program in recommended_programs %}
-        
             <li><a href="{% url 'program_detail' program.pk %}">{{ program.name }}</a></li>
         {% endfor %}
 
-        <a href="{% url 'user_recommendations' %}">Go Back</a>
     </ul>
+
 {% endblock content %}
 </body>
 </html>

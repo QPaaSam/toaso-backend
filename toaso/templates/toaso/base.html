@@ -61,11 +61,26 @@
     display: flex;
     text-align: center;
     justify-content: center;
-    height: 100%;
+    height: 100vh;
+    border: solid 1px;
 }
 
-.flex-items > div {
+.flex-items .course {
+    border: solid 1px blue;
     padding: 20px;
+    height: 40%;
+    max-width:30% ;
+}
+
+.course .course-img{
+    border: solid red 1px;
+    height: 50%;
+    width: 96%;
+    margin: auto;
+}
+
+.course .course-name{
+    margin-top: 30px;
 }
 
 .flex-columns.flex-reverse .row{
@@ -247,7 +262,7 @@ img {
 }
 
 .navbar2 a:hover {
-    border-bottom: #38A1FF 2px solid;
+    border-bottom: #fff 2px solid;
 }
 
 .navbar2 ul {
