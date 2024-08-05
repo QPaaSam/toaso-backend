@@ -8,6 +8,9 @@ from .forms import UserProfileForm
 def index(request):
     return render(request, 'toaso/home.html')
 
+def base(request):
+    return render(request, 'toaso/base.html')
+
 def recommend_programs(user_profile):
     recommendations = []
     user_elective_subjects = set(user_profile.elective_subjects.all())

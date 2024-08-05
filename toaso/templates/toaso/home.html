@@ -1,11 +1,14 @@
+{% extends 'toaso/base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome To TOASO</title>
 </head>
 <body>
+    {% block content %}
     <h1>Welcome, <small>{{request.user}}</small></h1>
     
     <form method="post" action="{% url 'logout' %}">
@@ -14,5 +17,6 @@
     </form> 
     <p><a href="{% url 'user_recommendations' %}">Recommendations</a></p>
     <p><a href="{% url 'programs' %}">All Programs</a></p>
+    {% endblock content %}
 </body>
 </html>

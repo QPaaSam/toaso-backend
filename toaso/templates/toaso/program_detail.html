@@ -1,3 +1,5 @@
+{% extends 'toaso/base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
     <title>{{ program.name }}</title>
 </head>
 <body>  
-
+{% block content %}
     <h1> {{program.name}} </h1>
     <p>{{ program.description }}</p>
     <p><strong>Core Requirements: </strong>
@@ -27,5 +29,6 @@
     <p><a href="{% url 'programs' %}">Back to all programs</a></p>
 
     <p><a href="{% url 'view_recommendations' %}"> Back to Recommendations</a></p>
+{% endblock content %}
 </body>
 </html>
