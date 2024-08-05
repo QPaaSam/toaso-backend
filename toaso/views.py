@@ -8,8 +8,14 @@ from .forms import UserProfileForm
 def index(request):
     return render(request, 'toaso/home.html')
 
-def base(request):
-    return render(request, 'toaso/base.html')
+def about(request):
+    return render(request, 'toaso/about.html')
+
+def services(request):
+    return render(request, 'toaso/services.html')
+
+def contact(request):
+    return render(request, 'toaso/contact.html')
 
 def recommend_programs(user_profile):
     recommendations = []

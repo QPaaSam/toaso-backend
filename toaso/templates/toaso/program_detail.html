@@ -9,26 +9,118 @@
 </head>
 <body>  
 {% block content %}
-    <h1> {{program.name}} </h1>
-    <p>{{ program.description }}</p>
-    <p><strong>Core Requirements: </strong>
-        Credit passes in English, Core Mathematics, Integrated Science & Social Studies
-    <p><strong>Elective Requirements: </strong> 
-        {% if program.elective_reqirement_logic == 'ANY' %}
-            Credit passes in any three electives
-        {% elif program.elective_requirement_logic == 'ALL' %}
-            {% for elective in program.elective_requirements.all %}
-                {{ elective.name }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO' %}
-            {{ program.constant_elective }} and any two elective subjects
-        {% endif %}
-    <p><strong>NOTE: </strong> {{program.note}} </p>    
-    <p><strong> Cut-off Point: </strong> {{program.cut_off_point}}</p>
-    <p><strong> Career Pathways: </strong> {{program.career}}</p>
+
+<section id="section-find" class="solutions flex-columns">
+    <div class="row">
+        <div class="column">
+            <div class="column-2">
+                <h1> {{program.name}} </h1>
+                <p>{{ program.description }}</p>                <a href="" class="btn btn-outline">Read More</a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="column-1">
+                <img src="images/image3.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<header class="hero">
+    <div id="navbar" class="navbar2">
+        <nav>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Entry Requirements</a></li>
+                <li><a href="#">Cut-off Point</a></li>
+                <li><a href="#">Career</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+<div class="main-content">
+
+    <section id="about">
+        <h1>About Us</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae sapiente at, numquam assumenda ex sit omnis ratione quas facilis reiciendis, suscipit, inventore labore rerum maxime fugit optio veniam eaque! Labore?</p>
+    </section>
+
+    <section id="requirements">
+        <h1>Entry Requirements</h1>
+        <div>
+            <h3>Core Subjects</h3>
+            <p>Credit passes in:</p>
+            <div class="core">
+                <ul>
+                    <li>English</li>
+                    <hr>
+                    <li>Core Mathematics</li>
+                    <hr>
+                    <li>Integrated Science</li>
+                    <hr>
+                    <li>Social Studies</li>
+                </ul>
+            </div>
+        
+                
+            <h3>Elective Subjects</h3>
+            <p>Credit passes in:</p>
+            <div class="core">
+                <ul>
+                    <li>{% if program.elective_reqirement_logic == 'ANY' %}
+                        Credit passes in any three electives
+                    {% elif program.elective_requirement_logic == 'ALL' %}
+                        {% for elective in program.elective_requirements.all %}
+                            {{ elective.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    {% elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO' %}
+                        {{ program.constant_elective }} and any two elective subjects
+                    {% endif %}</li>
+            
+                </ul>
+            </div>
+
+            <div class="note">
+                <ul>
+                    <li>
+                        NOTE:
+                    </li>
+                    <hr>
+                    <li>
+                        <strong> {{program.note}} </strong>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="core">
+                <ul>
+                    <li>
+                        <h3>Cut-off Point</h3>
+                    </li>
+                    <hr>
+                    <li> {{program.cut_off_point}}</li>
+                </ul>
+            </div>
+
+            <div class="core">
+                <ul>
+                    <li>
+                        <h3>Career Path</h3>
+                    </li>
+                    <hr>
+                    <li> {{program.career}}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>  
+
     <p><a href="{% url 'programs' %}">Back to all programs</a></p>
 
     <p><a href="{% url 'view_recommendations' %}"> Back to Recommendations</a></p>
 {% endblock content %}
+
 </body>
 </html>
