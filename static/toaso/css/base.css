@@ -55,14 +55,12 @@
 }
 
 .flex-items .course {
-    border: solid 1px blue;
     padding: 20px;
     height: 40%;
     max-width:30% ;
 }
 
 .course .course-img{
-    border: solid red 1px;
     height: 50%;
     width: 96%;
     margin: auto;

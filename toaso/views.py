@@ -58,7 +58,7 @@ def view_recommendations(request):
         recommended_programs = recommend_programs(user_profile)
         query = request.GET.get('q') #search fuction
         if query:
-            recommended_programs = [program for program in recommend_programs if query.lower() in program.name.lower()]
+            recommended_programs = [program for program in recommended_programs if query.lower() in program.name.lower()]
         return render(request, 'toaso/user_recommendations.html', {'user':user_profile, 'recommended_programs':recommended_programs, 'all_programs': all_programs, 'query': query})
     else:
         return redirect('user_recommendations')
@@ -67,6 +67,7 @@ def all_programs(request):
     query = request.GET.get('q')
     if query:
         programs = Program.objects.filter(name__icontains=query)
+        page_obj = programs
     else:
         programs = Program.objects.all()
         page = request.GET.get('page')
@@ -76,7 +77,7 @@ def all_programs(request):
         else:
             paginator = Paginator(programs, 10)
             page_obj = paginator.get_page(page)
-    return render(request, 'toaso/all_programs.html', {'page_obj':page_obj})
+    return render(request, 'toaso/all_programs.html', {'page_obj':page_obj})    
 
 def program_detail(request, pk):
     program = get_object_or_404(Program, pk=pk)
