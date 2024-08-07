@@ -9,20 +9,28 @@
 </head>
 <body>
     {% block content %}
-    <h1>University Programs</h1>
+    <section id="prog-section">
+        <h1>University Programs</h1>
 
-    <form method="GET" style="margin-top: 20px; display: flex">
-        <input type="text" name="q" placeholder="Search programs" value="{{request.GET.q}}"> 
-        <input class="button" type="submit", value="search">
-    </form>    
+        <form method="GET" class="search" style="margin-top: 20px; display: flex">
+            <input class="search-bar" type="text" name="q" placeholder="Search programs" value="{{request.GET.q}}"> 
+            <input class="btn" type="submit", value="search">
+        </form> 
 
-    <ul>
-        {% for program in programs %}
-            <li>
-                <a href="{% url 'program_detail' program.pk %}">{{program.name}}</a>
-            </li>
-        {% endfor %}
-    </ul>
+        <div class="programs">
+            <ul>
+                {% for program in programs %}
+                    <li>
+                        <div class="prog-box">
+                            <a href="{% url 'program_detail' program.pk %}">{{program.name}}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+    </section>
+    
     {% endblock content %}
 </body>
 </html>
