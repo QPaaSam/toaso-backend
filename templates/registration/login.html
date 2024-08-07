@@ -8,14 +8,26 @@
     <title>Login</title>
 </head>
 <body> 
-    {% block content %}  
-    <h1>Login Page</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="btn" type="submit" value="Login">
-    </form>
-    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
-{% endblock content %}
+    {% block content %} 
+        <section id="prog-section">
+            <div class="login-section">
+                <div class="login">
+                        <h1>Login Page</h1>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="signup-box">
+                            <input class="btn-login" type="submit" value="Login">
+                        </div>
+                    </form>
+                    <p>Don't have an account? <a href="{% url 'signup' %}"><span class="text-primary">Sign up</a></p>
+                </div>
+
+                <div class="login-img">
+                    <img src="#" alt="">
+                </div>
+            </div>
+        </section>
+    {% endblock content %}
 </body>
 </html>

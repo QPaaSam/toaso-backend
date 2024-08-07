@@ -9,13 +9,34 @@
 </head>
 <body>
     {% block content %}
-    <h1>Sign Up Page</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn" type="submit"> Sign up </button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        <section id="prog-section">
+            <h1>Sign Up Page</h1>
+            <div class="login-section">
+                <div class="signup">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label class="label">{{form.username.label}}</label>
+                                <p>{{form.username}}</p>
+
+                        <label>{{form.password1.label}}</label>
+                        <p>{{form.password1}}</p>
+
+                        <label>{{form.password2.label}}</label>
+                        <p>{{form.password2}}</p>
+
+                        <div class="signup-box">
+                            <button class="btn-login" type="submit"> Sign up </button>
+                        </div>
+                    </form>
+                    <p>Already have an account?  <a href="{% url 'login' %}"><span class="text-primary">Login</span></a></p>    
+                </div>
+               
+                <div class="login-img">
+                    <img src="#" alt="">
+                </div>
+            </div>
+            
+        </section>
     {% endblock content %}
 </body>
 </html>
