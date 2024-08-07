@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
 from .models import UserProfile, Program
 from .forms import UserProfileForm
 
@@ -68,7 +69,14 @@ def all_programs(request):
         programs = Program.objects.filter(name__icontains=query)
     else:
         programs = Program.objects.all()
-    return render(request, 'toaso/all_programs.html', {'programs':programs})
+        page = request.GET.get('page')
+
+        if page == 'all':
+            page_obj = programs
+        else:
+            paginator = Paginator(programs, 10)
+            page_obj = paginator.get_page(page)
+    return render(request, 'toaso/all_programs.html', {'page_obj':page_obj})
 
 def program_detail(request, pk):
     program = get_object_or_404(Program, pk=pk)

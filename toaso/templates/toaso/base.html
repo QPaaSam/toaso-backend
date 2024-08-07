@@ -234,6 +234,10 @@ img {
     border-bottom: #38A1FF 2px solid;
 }
 
+.navbar .logo-link:hover {
+    border-bottom: none;
+}
+
 .navbar ul {
     display: flex;
 }
@@ -349,6 +353,10 @@ img {
     border-radius: 10px;
 }
 
+.pagination{
+    margin-top: 25px;
+}
+
 .footer {
     display: flex;
     flex-direction: column;
@@ -399,7 +407,7 @@ img {
     <header class="hero">
         <div id="navbar" class="navbar">
             <h1 class="logo">
-                <span class="text-primary"><i class="fas fa-book-open"></i></span> TOASO
+                <span class="text-primary"><i class="fas fa-book-open"></i></span><a class="logo-link" href="{% url 'home' %}">TOASO</a>
             </h1>
             <nav>
                 <ul>

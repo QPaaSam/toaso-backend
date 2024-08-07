@@ -19,7 +19,7 @@
 
         <div class="programs">
             <ul>
-                {% for program in programs %}
+                {% for program in page_obj %}
                     <li>
                         <div class="prog-box">
                             <a href="{% url 'program_detail' program.pk %}">{{program.name}}</a>
@@ -27,6 +27,30 @@
                     </li>
                 {% endfor %}
             </ul>
+
+            <div class="pagination">
+                <span class="steplinks">
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_previous %}
+                    <p>
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    </p>
+                    {% endif %}                    
+        
+                    {% if page_obj.has_next %}
+                    <p>
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    </p>
+                    {% endif %}
+                </span>
+            </div>
+            <a href="{% url 'programs' %}?page=all" class="view-all-link">View All Programs</a>
         </div>
         
     </section>
