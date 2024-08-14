@@ -64,6 +64,7 @@ def view_recommendations(request):
         return redirect('user_recommendations')
     
 def all_programs(request):
+    programs = Program.objects.select_related('school').all()
     query = request.GET.get('q')
     if query:
         programs = Program.objects.filter(name__icontains=query)
