@@ -10,19 +10,20 @@
 <body>
     {% block content %}
         <section id="prog-section">
-            <h1>Sign Up Page</h1>
+            
             <div class="login-section">
-                <div class="signup">
+                <div class="login">
+                    <h1>Toaso Sign Up</h1>
                     <form action="" method="POST">
                         {% csrf_token %}
                         <label class="label">{{form.username.label}}</label>
-                                <p>{{form.username}}</p>
-
+                        {{form.username}}
+                        <p></p>
                         <label>{{form.password1.label}}</label>
-                        <p>{{form.password1}}</p>
-
+                        {{form.password1}}
+                        <p></p>
                         <label>{{form.password2.label}}</label>
-                        <p>{{form.password2}}</p>
+                        {{form.password2}}
 
                         <div class="signup-box">
                             <button class="btn-login" type="submit"> Sign up </button>
