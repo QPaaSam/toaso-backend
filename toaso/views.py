@@ -18,6 +18,7 @@ def services(request):
 def contact(request):
     return render(request, 'toaso/contact.html')
 
+
 def recommend_programs(user_profile):
     recommendations = []
     user_elective_subjects = set(user_profile.elective_subjects.all())
