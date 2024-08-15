@@ -23,7 +23,12 @@
             {% for program in recommended_programs %}
                 <li>
                     <div class="prog-box">
-                        <a href="{% url 'program_detail' program.pk %}">{{ program.name }}</a>
+                        <div class="image">
+                            <img src="{{ program.school.logo.url }}" alt="{{program.school.name}}">
+                        </div>
+                        <div class="text">
+                            <a href="{% url 'program_detail' program.pk %}">{{ program.name }}</a>
+                        </div>
                     </div>
                 </li>
             {% endfor %}

@@ -125,6 +125,22 @@
     font-weight: 100;
 }
 
+.column-2 .image{
+    display: flex;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.column-2 .image img{
+    width: 20%;
+}
+
+.column-2 .image p{
+    padding-left: 5px;
+    font-size: 15px;
+}
+
+
 .flex-columns h4{
     margin-bottom: 10px;
 }
@@ -332,11 +348,27 @@ img {
 }
 
 .prog-box{
+    display: flex;
     border: solid 1px #f4f4f4;
     padding: 15px;
     margin-top: 15px;
     border-radius: 10px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.prog-box .image{
+    width: 3%;
+    height: 3%;;
+    
+}
+
+.prog-box img{
+    margin-top: 5px;
+    width: 100%; 
+}
+
+.prog-box .text{
+    padding: 15px;
 }
 
 .pagination{
