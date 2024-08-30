@@ -22,22 +22,24 @@ def contact(request):
 def recommend_programs(user_profile):
     recommendations = []
     user_elective_subjects = set(user_profile.elective_subjects.all())
+    user_interests = set(user_profile.interests.all())
 
     for program in Program.objects.all():
         program_electives = set(program.elective_requirements.all())
         constant_course = program.constant_elective
+        program_interests = set(program.required_interests.all())
 
         if user_profile.aggregate <= program.cut_off_point:
             if program.elective_requirement_logic == 'ANY':
-                if user_elective_subjects & program_electives:
+                if user_elective_subjects & program_electives and program_interests.issubset(user_interests):
                     recommendations.append(program)
             elif program.elective_requirement_logic == 'ALL':
-                if program_electives.issubset(user_elective_subjects):
+                if program_electives.issubset(user_elective_subjects) and program_interests.issubset(user_interests):
                     recommendations.append(program)
             elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
                 if constant_course in user_elective_subjects:
                     remaining_subjects = user_elective_subjects - {constant_course}
-                    if len(remaining_subjects & program_electives) >= 2:
+                    if len(remaining_subjects & program_electives) >= 2 and program_interests.issubset(user_interests):
                         recommendations.append(program)
     return recommendations
 

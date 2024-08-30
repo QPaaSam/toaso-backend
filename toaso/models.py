@@ -9,6 +9,14 @@ class School(models.Model):
     def __str__(self):
         return self.name
 
+
+class Interest(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class ElectiveSubject(models.Model):
     name = models.CharField(max_length=100)
     
@@ -21,6 +29,7 @@ class UserProfile(models.Model):
     elective_subjects = models.ManyToManyField(ElectiveSubject, related_name='users')
     aggregate = models.IntegerField()
     career_aspiration = models.CharField(max_length=100)
+    interests = models.ManyToManyField(Interest, related_name='users', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -40,6 +49,7 @@ class Program(models.Model):
     )
     career = models.CharField(max_length=100)
     note = models.TextField(null=True, blank=True)
+    required_interests = models.ManyToManyField(Interest, related_name='programs', null=True, blank=True)
 
     def __str__(self):
         return self.name
