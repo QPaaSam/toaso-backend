@@ -39,7 +39,7 @@ class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='programs', null=True, blank=True)
-    cut_off_point = models.IntegerField()
+    cut_off_point = models.IntegerField(null=True, blank=True)
     elective_requirements = models.ManyToManyField(ElectiveSubject, related_name='required_for_programs', blank=True)
     constant_elective = models.ForeignKey(ElectiveSubject, related_name='constant_for_programs', null=True, blank=True, on_delete=models.SET_NULL)
     elective_requirement_logic = models.CharField(
