@@ -140,6 +140,10 @@
     font-size: 15px;
 }
 
+.column-1 img{
+    width: 60%;
+}
+
 
 .flex-columns h4{
     margin-bottom: 10px;

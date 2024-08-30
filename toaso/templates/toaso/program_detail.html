@@ -1,5 +1,5 @@
 {% extends 'toaso/base.html' %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +25,9 @@
         </div>
         <div class="column">
             <div class="column-1">
-                <img src="images/image3.png" alt="">
+                <div class="image">
+                    <img src="{% static 'toaso/images/image16.png' %}" alt="">
+                </div>
             </div>
         </div>
     </div>
