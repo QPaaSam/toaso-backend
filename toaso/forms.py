@@ -7,12 +7,12 @@ class UserProfileForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple, 
         required =True
     )
-    # interests = forms.ModelChoiceField(
-    #     queryset=Interest.objects.all(),
-    #     widget=forms.CheckboxSelectMultiple,
-    #     required=False
-    # )
+    interests = forms.ModelMultipleChoiceField(
+        queryset=Interest.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
 
     class Meta:
         model = UserProfile
-        fields = ['name', 'email', 'elective_subjects', 'aggregate']
+        fields = ['name', 'email', 'elective_subjects', 'aggregate', 'interests']

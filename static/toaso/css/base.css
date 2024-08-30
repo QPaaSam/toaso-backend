@@ -129,12 +129,10 @@
     display: flex;
     width: 70%;
     margin-bottom: 10px;
-    border: solid 1px;
 }
 
 .column-2 .image img{
     width: 20%;
-    border: solid 1px red;
 }
 
 .column-2 .image p{
