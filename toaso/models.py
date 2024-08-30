@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     elective_subjects = models.ManyToManyField(ElectiveSubject, related_name='users')
     aggregate = models.IntegerField()
     career_aspiration = models.CharField(max_length=100)
-    interests = models.ManyToManyField(Interest, related_name='users', null=True, blank=True)
+    interests = models.ManyToManyField(Interest, related_name='users')
 
     def __str__(self):
         return self.name
@@ -39,7 +39,7 @@ class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='programs', null=True, blank=True)
-    cut_off_point = models.IntegerField(null=True, blank=True)
+    cut_off_point = models.IntegerField()
     elective_requirements = models.ManyToManyField(ElectiveSubject, related_name='required_for_programs', blank=True)
     constant_elective = models.ForeignKey(ElectiveSubject, related_name='constant_for_programs', null=True, blank=True, on_delete=models.SET_NULL)
     elective_requirement_logic = models.CharField(
@@ -49,7 +49,7 @@ class Program(models.Model):
     )
     career = models.CharField(max_length=100)
     note = models.TextField(null=True, blank=True)
-    required_interests = models.ManyToManyField(Interest, related_name='programs', null=True, blank=True)
+    required_interests = models.ManyToManyField(Interest, related_name='programs')
 
     def __str__(self):
         return self.name
