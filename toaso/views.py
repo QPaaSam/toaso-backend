@@ -21,7 +21,11 @@ def contact(request):
 
 def recommend_programs(user_profile):
     recommendations = []
+    user_interests = set(user_profile.interests.all())
     user_elective_subjects = set(user_profile.elective_subjects.all())
+
+    programs_with_interest_matches = []
+    programs_without_interest_matches = []
 
     for program in Program.objects.all():
         program_electives = set(program.elective_requirements.all())
@@ -39,8 +43,15 @@ def recommend_programs(user_profile):
                     if constant_course in user_elective_subjects:
                         remaining_subjects = user_elective_subjects - {constant_course}
                         if len(remaining_subjects & program_electives) >= 2:
-                            recommendations.append(program)
-    return recommendations
+                            programs_with_interest_matches.append(program)
+    
+    programs_with_interest_matches.sort(key=lambda p: len(user_interests & set(p.required_interests.all())), reverse=True)
+    
+    for program in Program.objects.all():
+        if program not in programs_with_interest_matches:
+            programs_without_interest_matches.append(program)
+
+    return programs_with_interest_matches + programs_without_interest_matches
 
 def user_recommendations(request):
     if request.method == 'POST':
