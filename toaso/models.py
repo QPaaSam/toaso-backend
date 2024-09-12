@@ -38,6 +38,7 @@ class UserProfile(models.Model):
 class Program(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    overview = models.TextField(null=True, blank=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='programs', null=True, blank=True)
     cut_off_point = models.IntegerField()
     elective_requirements = models.ManyToManyField(ElectiveSubject, related_name='required_for_programs', blank=True)
