@@ -1,0 +1,65 @@
+{% extends 'toaso/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All University Programs</title>
+</head>
+<body>
+    {% block content %}
+    <section id="prog-section">
+        <h1>University Programs</h1>
+
+        <form method="GET" class="search" style="margin-top: 20px; display: flex">
+            <input class="search-bar" type="text" name="q" placeholder="Search careers" value="{{request.GET.q}}"> 
+            <input class="btn" type="submit", value="search">
+        </form> 
+
+        <div class="programs">
+            <ul>
+                {% for career in page_obj %}
+                    <li>
+                        <div class="prog-box">
+                            <div class="image">
+                                <img src="{{ program.school.logo.url }}" alt="{{program.school.name}}">
+                            </div>
+                            <div class="text">
+                                <a href="{% url 'career_detail' career.pk %}">{{career.name}}</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagination">
+                <span class="steplinks">
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_previous %}
+                    <p>
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    </p>
+                    {% endif %}                    
+        
+                    {% if page_obj.has_next %}
+                    <p>
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    </p>
+                    {% endif %}
+                </span>
+            </div>
+            <a href="{% url 'programs' %}?page=all" class="view-all-link">View All Programs</a>
+        </div>
+        
+    </section>
+    
+    {% endblock content %}
+</body>
+</html>

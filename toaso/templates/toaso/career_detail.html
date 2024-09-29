@@ -1,0 +1,98 @@
+{% extends 'toaso/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ program.name }}</title>
+</head>
+<body>  
+{% block content %}
+
+<section id="section-find" class="solutions flex-columns">
+    <div class="row">
+        <div class="column">
+            <div class="column-2">
+                <div class="image">
+                    <p><strong> {{program.school.name}} </strong></p>
+                </div>
+                <h1> {{career.name}} </h1>
+                <p>{{ career.overview }}</p>                
+                <a href="" class="btn btn-outline">Read More</a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="column-1">
+                <div class="image">
+                    <img src="{% static 'toaso/images/image16.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<header class="hero">
+    <div id="navbar" class="navbar2">
+        <nav>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">Trends</a></li>
+                <li><a href="#">Steps</a></li>
+                <li><a href="{% url 'careers' %}">Careers</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+<div class="main-content">
+
+    <section id="about">
+        <h1>Overview</h1>
+        <p>{{career.description}}</p>
+    </section>
+
+    
+            <div class="note">
+                <ul>
+                    <li>
+                        Skills Required:
+                    </li>
+                    <hr>
+                    <li>
+                        <strong> {{career.required_skills}} </strong>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="core">
+                <ul>
+                    <li>
+                        <h3>Industry Insights & Trends</h3>
+                    </li>
+                    <hr>
+                    <li> {{career.industry_insights}}</li>
+                </ul>
+            </div>
+
+            <div class="core">
+                <ul>
+                    <li>
+                        <h3>Steps To Succeed</h3>
+                    </li>
+                    <hr>
+                    <li> {{career.sucess_steps}}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>  
+    <p><a href="{% url 'programs' %}">Back to all programs</a></p>
+
+    <p><a href="{% url 'view_recommendations' %}"> Back to Recommendations</a></p>
+{% endblock content %}
+
+</body>
+</html>

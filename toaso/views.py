@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-from .models import UserProfile, Program
+from .models import UserProfile, Program, Career
 from .forms import UserProfileForm
 
 
@@ -96,3 +96,24 @@ def all_programs(request):
 def program_detail(request, pk):
     program = get_object_or_404(Program, pk=pk)
     return render(request, 'toaso/program_detail.html', {'program':program})
+
+def careers(request):
+    careers = Career.objects.all()
+    query = request.GET.get('q')
+    if query:
+        careers = Career.objects.filter(name__icontains=query)
+        page_obj = careers
+    else:
+        careers = Career.objects.all()
+        page = request.GET.get('page')
+
+        if page == 'all':
+            page_obj = careers
+        else:
+            paginator = Paginator(careers, 10)
+            page_obj = paginator.get_page(page)
+    return render(request, 'toaso/career.html', {'page_obj':page_obj})    
+
+def career_detail(request, pk):
+    career = get_object_or_404(Career, pk=pk)
+    return render(request, 'toaso/career_detail.html', {'career':career})

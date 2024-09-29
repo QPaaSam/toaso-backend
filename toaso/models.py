@@ -55,4 +55,17 @@ class Program(models.Model):
     def __str__(self):
         return self.name
 
+class Career(models.Model):
+    name = models.CharField(max_length=100)
+    overview = models.TextField(null=True, blank=True)
+    description = models.TextField()
+    required_skills = models.TextField(null=True, blank=True)
+    industry_insights = models.TextField(null=True, blank=True)
+    sucess_steps = models.TextField(null=True, blank=True)
+
+
+    def __str__(self):
+        return self.name
+
+
 
