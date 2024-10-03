@@ -21,37 +21,34 @@ def contact(request):
 
 def recommend_programs(user_profile):
     recommendations = []
-    user_interests = set(user_profile.interests.all())
-    user_elective_subjects = set(user_profile.elective_subjects.all())
-
-    programs_with_interest_matches = []
-    programs_without_interest_matches = []
-
+    user_elective_subjects = set(user_profile.elective_subjects.all())  # Get the user's electives
+    
     for program in Program.objects.all():
-        program_electives = set(program.elective_requirements.all())
-        constant_course = program.constant_elective
-
+        program_electives = set(program.elective_requirements.all())  # Get the program's electives
+        constant_course = program.constant_elective  # Constant elective for 'CONSTANT_PLUS_TWO' logic
+        
+        # Ensure the user's aggregate meets or exceeds the program's cut-off point
         if user_profile.aggregate is not None and program.cut_off_point is not None:
-            if user_profile.aggregate <= program.cut_off_point:
-                if program.elective_requirement_logic == 'ANY':
-                    if user_elective_subjects & program_electives:
-                        recommendations.append(program)
-                elif program.elective_requirement_logic == 'ALL':
-                    if program_electives.issubset(user_elective_subjects):
-                        recommendations.append(program)
-                elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
-                    if constant_course in user_elective_subjects:
-                        remaining_subjects = user_elective_subjects - {constant_course}
-                        if len(remaining_subjects & program_electives) >= 2:
-                            programs_with_interest_matches.append(program)
-    
-    programs_with_interest_matches.sort(key=lambda p: len(user_interests & set(p.required_interests.all())), reverse=True)
-    
-    for program in Program.objects.all():
-        if program not in programs_with_interest_matches:
-            programs_without_interest_matches.append(program)
+            if user_profile.aggregate <= program.cut_off_point:  
 
-    return programs_with_interest_matches + programs_without_interest_matches
+                # 'ANY' logic: At least 3 matching subjects with program requirements
+                if program.elective_requirement_logic == 'ANY':
+                    if len(user_elective_subjects & program_electives) >= 3:
+                        recommendations.append(program)
+                
+                # Logic for 'ALL': User must have all the electives the program requires
+                elif program.elective_requirement_logic == 'ALL':
+                    if program_electives.issubset(user_elective_subjects):  # Check if all program electives are in user subjects
+                        recommendations.append(program)
+                
+                # Logic for 'CONSTANT_PLUS_TWO': User must have constant elective and at least two others
+                elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
+                    if constant_course in user_elective_subjects:  # Check if constant elective is present
+                        remaining_subjects = user_elective_subjects - {constant_course}  # Exclude constant elective
+                        if len(remaining_subjects & program_electives) >= 2:  # Check if there are at least two matching electives
+                            recommendations.append(program)
+
+    return recommendations
 
 def user_recommendations(request):
     if request.method == 'POST':

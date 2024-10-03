@@ -73,8 +73,8 @@
             <p>Credit passes in:</p>
             <div class="core">
                 <ul>
-                    <li>{% if program.elective_reqirement_logic == 'ANY' %}
-                        Credit passes in any three electives
+                    <li>{% if program.elective_requirement_logic == 'ANY' %}
+                        <b> any three electives </b>
                     {% elif program.elective_requirement_logic == 'ALL' %}
                         {% for elective in program.elective_requirements.all %}
                             {{ elective.name }}{% if not forloop.last %}, {% endif %}
