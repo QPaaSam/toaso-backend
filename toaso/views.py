@@ -19,34 +19,43 @@ def contact(request):
     return render(request, 'toaso/contact.html')
 
 
-def recommend_programs(user_profile):
+def recommend_programs(user_profile): 
     recommendations = []
-    user_elective_subjects = set(user_profile.elective_subjects.all())  # Get the user's electives
     
-    for program in Program.objects.all():
-        program_electives = set(program.elective_requirements.all())  # Get the program's electives
-        constant_course = program.constant_elective  # Constant elective for 'CONSTANT_PLUS_TWO' logic
-        
-        # Ensure the user's aggregate meets or exceeds the program's cut-off point
-        if user_profile.aggregate is not None and program.cut_off_point is not None:
-            if user_profile.aggregate <= program.cut_off_point:  
+    # Get the user's elective subjects and interests
+    user_elective_subjects = set(user_profile.elective_subjects.all())
+    user_interests = set(user_profile.interests.all())
 
-                # 'ANY' logic: At least 3 matching subjects with program requirements
+    for program in Program.objects.all():
+        program_electives = set(program.elective_requirements.all())
+        constant_course = program.constant_elective
+        program_interests = set(program.required_interests.all())
+
+        # Check if the user meets the aggregate requirement
+        if user_profile.aggregate is not None and program.cut_off_point is not None:
+            if user_profile.aggregate <= program.cut_off_point:
+
+                # Check the elective requirement logic for the program
                 if program.elective_requirement_logic == 'ANY':
+                    # Ensure the user has at least 3 matching elective subjects
                     if len(user_elective_subjects & program_electives) >= 3:
-                        recommendations.append(program)
-                
-                # Logic for 'ALL': User must have all the electives the program requires
-                elif program.elective_requirement_logic == 'ALL':
-                    if program_electives.issubset(user_elective_subjects):  # Check if all program electives are in user subjects
-                        recommendations.append(program)
-                
-                # Logic for 'CONSTANT_PLUS_TWO': User must have constant elective and at least two others
-                elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
-                    if constant_course in user_elective_subjects:  # Check if constant elective is present
-                        remaining_subjects = user_elective_subjects - {constant_course}  # Exclude constant elective
-                        if len(remaining_subjects & program_electives) >= 2:  # Check if there are at least two matching electives
+                        # Check if any user interests match the program's interests
+                        if user_interests & program_interests:
                             recommendations.append(program)
+
+                elif program.elective_requirement_logic == 'ALL':
+                    # Check if all required electives match the user's subjects
+                    if program_electives.issubset(user_elective_subjects):
+                        if user_interests & program_interests:
+                            recommendations.append(program)
+
+                elif program.elective_requirement_logic == 'CONSTANT_PLUS_TWO':
+                    # Ensure the user has the constant elective and two others
+                    if constant_course in user_elective_subjects:
+                        remaining_subjects = user_elective_subjects - {constant_course}
+                        if len(remaining_subjects & program_electives) >= 2:
+                            if user_interests & program_interests:
+                                recommendations.append(program)
 
     return recommendations
 
